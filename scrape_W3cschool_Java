@@ -1,7 +1,36 @@
 from urllib.request import urlretrieve
-from urllib.request import 
+from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 
 # The entry of the Web
-URL = 
+URL = "http://www.w3cschool.cn/java/java-if-else-swithch.html"
+
+# Read Web data into html
+html = urlopen(URL).read()
+
+bsObj = BeautifulSoup(html,"html.parser")
+
+# Select which link you need
+JavaLinks = bsObj.findAll("a", href=re.compile("^(/java/java)")
+                              ,text=re.compile("^(Java)"))
+
+# Record the number of link
+count = 0
+
+for link in JavaLinks:
+  string1 = link['href']
+  
+  #The destination where you want to store your WebPage
+  DES = "F:\\WebPage\\" + string1.split('/',string1.count('/'))[2]
+  #print(DES)
+  
+  url = "http://www.w3cschool.cn" + link['href']
+  #print(url)
+  
+  count = count + 1
+  print(count)
+  
+  # Excute storage opreation
+  urlretrieve(url,DES)
+
